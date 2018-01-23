@@ -30,6 +30,8 @@ alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias emacs="emacs -nw"
 alias cl="clear"
+alias school1="cd Dropbox/Columbia\ University/Freshman/ && ls"
+alias school2="cd Dropbox/Columbia\ University/Sophmore/ && ls"
 
 svndiff()     { svn diff "$@" | colordiff; }
 svndiffless() { svn diff "$@" | colordiff | less -R; }
