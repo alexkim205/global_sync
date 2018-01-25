@@ -7,7 +7,8 @@ export PATH
 # automatically git sync emacs configurations
 
 ## git pull changes when terminal starts
-git pull
+git pull -q
+echo "Bash settings up to date!"
 
 ## git add changes when terminal exits
 gitadd() {
