@@ -1,10 +1,10 @@
 
 # Setting PATH for Python 3.6
 # The original version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+PATH="/System/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
-PATH="/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
-export PATH
+
+export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
 
 # automatically git sync emacs configurations
 
