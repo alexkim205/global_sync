@@ -3,6 +3,8 @@
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
 export PATH
+PATH="/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
+export PATH
 
 # automatically git sync emacs configurations
 
