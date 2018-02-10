@@ -64,3 +64,6 @@
                             (?\" . ?\")
                             (?\{ . ?\})
                             ) )
+
+;; margin line numbers
+(setq global-linum-mode t)
