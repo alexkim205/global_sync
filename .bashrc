@@ -32,6 +32,7 @@ alias emacs="emacs -nw"
 alias cl="clear"
 alias school1="cd ~/Dropbox/Columbia\ University/Freshman/ && ls"
 alias school2="cd ~/Dropbox/Columbia\ University/Sophmore/ && ls"
+alias gdb="sudo gdb"
 
 svndiff()     { svn diff "$@" | colordiff; }
 svndiffless() { svn diff "$@" | colordiff | less -R; }
