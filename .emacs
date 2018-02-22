@@ -67,3 +67,6 @@
 
 ;; margin line numbers
 (setq global-linum-mode t)
+
+;; set comment to pink
+(set-face-foreground 'font-lock-comment-face "light pink")
