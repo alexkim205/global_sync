@@ -130,6 +130,7 @@
 
 ;; vertical border
 
-(set-face-attribute 'vertical-border 
-                    nil 
-                    :foreground (face-attribute 'default :background)) 
+;; Set symbol for the border
+(set-display-table-slot standard-display-table
+                        'vertical-border 
+                        (make-glyph-code ?┃))
