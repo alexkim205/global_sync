@@ -1,7 +1,7 @@
 ;; Use ibuffer as default buffer list
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
+		    (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
@@ -43,17 +43,19 @@
     ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "7527f3308a83721f9b6d50a36698baaedc79ded9f6d5bd4e9a28a22ab13b3cb1" default)))
  '(package-selected-packages
    (quote
-    (all-the-icons powerline-evil nlinum smart-mode-line-powerline-theme smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
+    (nlinum-relative all-the-icons powerline-evil nlinum smart-mode-line-powerline-theme smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(linum ((t (:foreground "#4B5668"))))
  '(sml/charging ((t (:inherit sml/global :foreground "brightgreen"))))
  '(sml/col-number ((t (:inherit sml/global :background "brightblack"))))
  '(sml/discharging ((t (:inherit sml/global :background "black" :foreground "brightred"))))
  '(sml/minor-modes ((t nil)))
- '(sml/position-percentage ((t (:inherit sml/prefix :background "brightblack" :foreground "white" :weight normal)))))
+ '(sml/position-percentage ((t (:inherit sml/prefix :background "brightblack" :foreground "white" :weight normal))))
+ '(vertical-border ((t (:foreground "blue")))))
 
 ;; aggressive-indent mode
 (global-aggressive-indent-mode 1)
@@ -108,3 +110,26 @@
 (setq-default neo-smart-open t)
 (setq neo-theme 'icons)
 (global-set-key [f8] 'neotree-toggle)
+
+;; linenum
+(add-hook 'find-file-hook (lambda () (linum-mode 1)))
+
+(unless window-system
+  (add-hook 'linum-before-numbering-hook
+	    (lambda ()
+	      (setq-local linum-format-fmt
+			  (let ((w (length (number-to-string
+					    (count-lines (point-min) (point-max))))))
+			    (concat "%" (number-to-string w) "d "))))))
+
+(defun linum-format-func (line)
+  (propertize (format linum-format-fmt line) 'face 'linum))
+
+(unless window-system
+  (setq linum-format 'linum-format-func))
+
+;; vertical border
+
+(set-face-attribute 'vertical-border 
+                    nil 
+                    :foreground (face-attribute 'default :background)) 
