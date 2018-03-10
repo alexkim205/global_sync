@@ -28,6 +28,9 @@
 ;; theme
 (load-theme 'nord t)
 
+;; hide menu bar
+(menu-bar-mode -1)
+
 ;; ace window
 (global-set-key (kbd "M-o") 'ace-window)
 (custom-set-variables
@@ -40,7 +43,7 @@
     ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "7527f3308a83721f9b6d50a36698baaedc79ded9f6d5bd4e9a28a22ab13b3cb1" default)))
  '(package-selected-packages
    (quote
-    (powerline-evil nlinum smart-mode-line-powerline-theme smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
+    (all-the-icons powerline-evil nlinum smart-mode-line-powerline-theme smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,17 +81,6 @@
 (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
 (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
-;; line numbering
-(defun my-nlinum-mode-hook ()
-  (when nlinum-mode
-    (setq-local nlinum-format
-                (concat "%" (number-to-string
-                             ;; Guesstimate number of buffer lines.
-                             (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
-                        "d "))))
-(add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
-(global-nlinum-mode)
-
 ;; backups
 (defvar --backup-directory (concat user-emacs-directory "backups"))
 (if (not (file-exists-p --backup-directory))
@@ -109,3 +101,10 @@
 ;; modeline
 (require 'powerline)
 (powerline-center-theme)
+
+;; neo tree
+(require 'neotree)
+(require 'all-the-icons)
+(setq-default neo-smart-open t)
+(setq neo-theme 'icons)
+(global-set-key [f8] 'neotree-toggle)

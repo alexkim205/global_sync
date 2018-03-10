@@ -11,15 +11,18 @@ export PS1='\[\e[31;1m\]\u\[\e[0m\]: \[\e[35;1m\]\W\[\e[0m\]\$ '
 # editor
 export EDITOR="emacs -nw"
 
-# aliases & functions
+# open tmux at shell startup
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
 
+# aliases & functions
 case "$OSTYPE" in
-*linux*)
+    *linux*)
         alias dmesg='dmesg --color'
         alias pacman='pacman --color=auto'
         alias ls='ls --color=auto'
         ;;
-*darwin*)
+    *darwin*)
         alias ls='ls -G'
         ;;
 esac
