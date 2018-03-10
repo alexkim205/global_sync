@@ -105,11 +105,7 @@
 (powerline-center-theme)
 
 ;; neo tree
-(require 'neotree)
-(require 'all-the-icons)
-(setq-default neo-smart-open t)
-(setq neo-theme 'icons)
-(global-set-key [f8] 'neotree-toggle)
+
 
 ;; linenum
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
