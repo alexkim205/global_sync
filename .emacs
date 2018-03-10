@@ -37,16 +37,20 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "7527f3308a83721f9b6d50a36698baaedc79ded9f6d5bd4e9a28a22ab13b3cb1" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "7527f3308a83721f9b6d50a36698baaedc79ded9f6d5bd4e9a28a22ab13b3cb1" default)))
  '(package-selected-packages
    (quote
-    (smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
+    (powerline-evil nlinum smart-mode-line-powerline-theme smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(sml/charging ((t (:inherit sml/global :foreground "brightgreen"))))
+ '(sml/col-number ((t (:inherit sml/global :background "brightblack"))))
+ '(sml/discharging ((t (:inherit sml/global :background "black" :foreground "brightred"))))
+ '(sml/minor-modes ((t nil)))
+ '(sml/position-percentage ((t (:inherit sml/prefix :background "brightblack" :foreground "white" :weight normal)))))
 
 ;; aggressive-indent mode
 (global-aggressive-indent-mode 1)
@@ -74,9 +78,34 @@
 (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
 (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
-;; line numbers
-(setq linum-format "%d ")
-(global-linum-mode 1)
+;; line numbering
+(defun my-nlinum-mode-hook ()
+  (when nlinum-mode
+    (setq-local nlinum-format
+                (concat "%" (number-to-string
+                             ;; Guesstimate number of buffer lines.
+                             (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+                        "d "))))
+(add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
+(global-nlinum-mode)
 
-;; smart mode line
-(sml/setup)
+;; backups
+(defvar --backup-directory (concat user-emacs-directory "backups"))
+(if (not (file-exists-p --backup-directory))
+    (make-directory --backup-directory t))
+(setq backup-directory-alist `(("." . ,--backup-directory)))
+(setq make-backup-files t               ; backup of a file the first time it is saved.
+      backup-by-copying t               ; don't clobber symlinks
+      version-control t                 ; version numbers for backup files
+      delete-old-versions t             ; delete excess backup files silently
+      delete-by-moving-to-trash t
+      kept-old-versions 6               ; oldest versions to keep when a new numbered backup is made (default: 2)
+      kept-new-versions 9               ; newest versions to keep when a new numbered backup is made (default: 2)
+      auto-save-default t               ; auto-save every buffer that visits a file
+      auto-save-timeout 20              ; number of seconds idle time before auto-save (default: 30)
+      auto-save-interval 200            ; number of keystrokes between auto-saves (default: 300)
+      )
+
+;; modeline
+(require 'powerline)
+(powerline-center-theme)
