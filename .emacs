@@ -10,8 +10,6 @@
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
-
-
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; load emacs 24's package system. Add MELPA repository.
@@ -26,7 +24,9 @@
 ;; add folders to load-path
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/libraries"))
-(load-theme 'dracula t)
+
+;; theme
+(load-theme 'nord t)
 
 ;; ace window
 (global-set-key (kbd "M-o") 'ace-window)
@@ -35,9 +35,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "7527f3308a83721f9b6d50a36698baaedc79ded9f6d5bd4e9a28a22ab13b3cb1" default)))
  '(package-selected-packages
    (quote
-    (discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
+    (smart-mode-line highlight-indent-guides golden-ratio-scroll-screen smooth-scrolling nord-theme discover auto-complete indent-guide rainbow-delimiters aggressive-indent ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -46,17 +49,16 @@
  )
 
 ;; aggressive-indent mode
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'css-mode-hook #'aggressive-indent-mode)
 (global-aggressive-indent-mode 1)
 (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+(add-to-list
+ 'aggressive-indent-dont-indent-if
+ '(and (derived-mode-p 'c++-mode 'c-mode)
+       (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                           (thing-at-point 'line)))))
 
 ;; rainbow delimiters
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
-;; indent guide
-(require 'indent-guide)
-(indent-guide-global-mode)
 
 ;; electric-pair-mode
 (electric-pair-mode 1)
@@ -64,9 +66,17 @@
                             (?\" . ?\")
                             (?\{ . ?\})
                             ) )
+;; smooth scrolling
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
+(setq smooth-scroll-margin 5)
+(require 'golden-ratio-scroll-screen)
+(global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
+(global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
-;; margin line numbers
-(setq global-linum-mode t)
+;; line numbers
+(setq linum-format "%d ")
+(global-linum-mode 1)
 
-;; set comment to pink
-(set-face-foreground 'font-lock-comment-face "light pink")
+;; smart mode line
+(sml/setup)
