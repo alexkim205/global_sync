@@ -6,6 +6,9 @@ export PATH
 
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
 
+# iterm2 shell integration
+source ~/.iterm2/.iterm2_shell_integration.bash
+
 # automatically git sync emacs configurations
 
 ## git pull changes when terminal starts
@@ -24,3 +27,5 @@ trap gitadd EXIT
 if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
