@@ -132,8 +132,5 @@
                         'vertical-border 
                         (make-glyph-code ?│))
 
-;; company mode
-(add-hook 'after-init-hook 'global-company-mode)
-
 ;; backup walker
 (require 'backup-walker)
