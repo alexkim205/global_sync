@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+static int i = 3;
+
+void f() {
+  if (i) {
+    i--;
+    printf("hi %d", i);
+  } else {
+    if(fork())
+      fork();
+  }
+}
+
+int main() {
+  f();
+  return 0;
+}
