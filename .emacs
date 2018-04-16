@@ -25,9 +25,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/libraries"))
 
-;; theme
-(load-theme 'nord t)
-
 ;; hide menu bar
 (menu-bar-mode -1)
 
@@ -103,10 +100,6 @@
 ;; modeline
 (require 'powerline)
 (powerline-center-theme)
-
-;; neo tree
-(global-set-key [f8] 'neotree-toggle)
-(setq neo-smart-open t)
 
 ;; linenum
 (add-hook 'find-file-hook (lambda () (linum-mode 1)))
