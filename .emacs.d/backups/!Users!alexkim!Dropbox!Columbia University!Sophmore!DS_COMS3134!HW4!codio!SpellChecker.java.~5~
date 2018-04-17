@@ -1,0 +1,109 @@
+
+/* Following the specification in the README.md file, provide your 
+ * SpellChecker class.
+ */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SpellChecker
+{
+    public static final String chars = "abcdefghijklmnopqrstuvwxyz'";
+    public Hashtable<String, String> dictionary = new Hashtable<String, String>();
+    
+    public SpellChecker(String df, String f) {
+	BufferedReader dicty = null;
+	BufferedReader input = null;
+	
+	try {
+	    // initialize hashtable
+	    dicty = new BufferedReader(new FileReader(df));
+	    String line;
+	    int lineno = 1;
+	    while ((line = dicty.readLine()) != null) {
+		line = line.toLowerCase();
+		dictionary.put(line, line);
+	    }
+	    dicty.close();
+
+	    input = new BufferedReader(new FileReader(f));
+
+	    System.out.println();
+	    System.out.format("mispelled word | lineno | suggestions\n");
+	    System.out.format("-------------------------------------\n");
+	    
+	    while ((line = input.readLine()) != null) {
+		/* regex to remove leading and trailing punctuation was 
+		   taken from "https://stackoverflow.com/questions/1250
+		   6655/how-can-i-remove-all-leading-and-trailing-punct
+		   uation"
+		*/
+		String[] arr = line.split(" ");
+		for (int i = 0; i < arr.length; i++) {
+		    arr[i] = arr[i].toLowerCase().replaceFirst("^[^a-z]+", "").replaceAll("[^a-z]+$", "");
+		    // for each misspelled word print linenumbers and suggestions
+		    if (!dictionary.contains(arr[i])) {
+			System.out.format("%14s | %6d | %s\n", arr[i], lineno, getSuggestions(arr[i]));
+		    }
+		}
+		lineno++;
+	    }
+	    System.out.println();
+	    input.close();
+	    
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    public String getSuggestions (String word) {
+	ArrayList<String> suggested = new ArrayList<String>();
+	ArrayList<String> buff = new ArrayList<String>(Arrays.asList(word.split("")));
+	String join;
+	
+	// add one character
+	for (int i = 0; i < chars.length(); i++) {	   
+	    for (int x = 0; x <= buff.size(); x++) {
+		buff.add(x, chars.substring(i, i+1));
+		join = String.join("", buff);
+		// if in dictionary add to suggested list
+		if (dictionary.contains(join)) {
+		    suggested.add(join);
+		}
+		buff.remove(x);
+	    }
+	}
+	
+	// remove one character
+	for (int y = 0; y < buff.size(); y++) {
+	    String remove = buff.remove(y);
+	    join = String.join("", buff);
+	    if (dictionary.contains(join)) {
+		suggested.add(join);
+	    }
+	    buff.add(y, remove);
+	}
+
+	// exchange adjacent character
+	for (int z = 0; z < buff.size()-1; z++) {
+	    buff.add(z+1, buff.remove(z));
+	    join = String.join("", buff);
+	    if (dictionary.contains(join)) {
+		suggested.add(join);
+	    }
+	    buff.add(z, buff.remove(z+1));
+	}
+
+	return String.join(", ", suggested);
+    }
+
+    public static void main(String[] args) {
+	    String dict_f = args[0];
+	    String file = args[1];
+	    SpellChecker spellcheck = new SpellChecker(dict_f, file);
+	}
+    }

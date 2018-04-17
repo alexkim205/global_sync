@@ -1,0 +1,34 @@
+void argv_to_list(char **argv, struct List *list);
+void list_to_file(struct List *list, const char *filename);
+void deallocate(char **copy);
+
+void argv_to_list(char **argv, struct List *list) {
+  struct Node *node = NULL;
+  
+  while (*argv) {
+    node = addBack(list, *argv++);
+  }
+}
+
+void list_to_file(struct List *list, const char *filename)
+{
+  FILE *fp;
+  uint32_t num, num_n;
+  uint16_t len, len_n;
+  struct Node *node = list->head;
+  num = f(node);
+
+  fp = fopen(filename, "wb");
+  num_n = htonl(num);
+  fwrite(&num_n, sizeof(num_n), 1, fp);
+  
+  while(node) {
+    len = strlen(node->data);
+    len_n = htons(len);
+    fwrite(&len_n, sizeof(len_n), 1, fp);
+    fwrite(node->data, len, 1, fp);
+    node = node->next;
+  }
+
+  fclose(fp);
+}

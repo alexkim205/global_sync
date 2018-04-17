@@ -1,0 +1,19 @@
+pre: tmux new -s cs3157
+windows:
+  - name: cs3157
+    root: ~/Dropbox/Columbia\ University/Sophmore/AP_COMS3157/clac/home/cs3157
+    layout: main-vertical-flipped
+    panes:
+      - commands:
+      	- ll
+      	- echo "rsync -azP clac:~/cs3157/labN ./"
+      	- echo "rsync -azP ./labN clac:~/cs3157/"
+      - commands:
+      	- ssh clac
+	- cd cs3157
+      - commands:
+	- ssh clac
+	- cd cs3157
+	focus: true
+		  
+

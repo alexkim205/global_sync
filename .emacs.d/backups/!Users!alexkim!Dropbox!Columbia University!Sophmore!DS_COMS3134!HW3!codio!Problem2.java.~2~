@@ -1,0 +1,31 @@
+import java.util.LinkedList;
+import java.io.*;
+import java.util.Scanner;
+
+public class Problem2 {
+    public static void main(String[] args)
+    {
+	try {
+	    File f = new File(args[0]);
+	    AvlTree t = new AvlTree();
+	    Scanner in = new Scanner(f);
+	    int lineno = 1;
+	    String l;
+	    String[] words;
+	
+	    while(in.hasNextLine()) {
+		l = in.nextLine().replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase();
+		words = l.split(" ");
+		for (String word: words) {
+		    t.indexWord(word, lineno);
+		}
+		lineno++;
+	    }
+	    in.close();
+
+	    t.printIndex();
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	}
+    }
+}

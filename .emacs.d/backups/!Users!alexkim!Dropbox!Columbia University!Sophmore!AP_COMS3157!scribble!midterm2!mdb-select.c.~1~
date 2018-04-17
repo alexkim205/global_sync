@@ -1,0 +1,14 @@
+struct MdbRec { char name[16]; char msg[24]; };
+
+static void die(const char *msg) { perror(msg); exit(1); }
+
+int main(int argc, char **argv) {
+  if (argc < 3) {
+    fprintf(stderr,
+            "usage: %s <in-mdb> <out-mdb> [mdb record numbers]\n", argv[0]);
+    exit(1); }
+
+  FILE *in_mdb;   FILE *out_mdb;   int mdb_rec_num;   struct MdbRec R;
+  
+  
+}

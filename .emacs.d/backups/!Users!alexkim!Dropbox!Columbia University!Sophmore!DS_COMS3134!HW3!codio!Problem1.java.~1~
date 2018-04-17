@@ -1,0 +1,9 @@
+public class Problem1 {
+
+    public static void main(String[] args)
+    {
+	ExpressionTree t = new ExpressionTree("3 5 4 * + 8 4 * 3 + 2 * +");
+
+    }
+    
+}

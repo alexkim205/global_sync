@@ -1,0 +1,149 @@
+import java.util.LinkedList;
+import java.util.Arrays;
+
+public class ExpressionTree {
+
+    private String postfix;
+    private ExpressionNode root;
+    private String ops = "+-*/";
+    
+    public ExpressionTree (String s) {
+	this.postfix = s;
+	this.root = postToStack(s);
+    }
+
+    private ExpressionNode postToStack (String s) {
+	LinkedList<ExpressionNode> stack = new LinkedList<ExpressionNode>();
+	String[] arr = s.split(" ");
+
+	// LEFT OFF FROM HERE
+	ExpressionNode r;
+	for (int i = 0; i < arr.length; i++) {
+	    if (ops.contains(arr[i])) { // if char is operator
+		r = stack.pop();
+		r = new ExpressionNode(arr[i].charAt(0), stack.pop(), r);
+	    } else {
+		r = new ExpressionNode(Integer.parseInt(arr[i]));
+	    }
+	    stack.push(r);
+	}
+	return stack.pop();
+    }
+    
+    private static class ExpressionNode {
+	private char operator;
+	private int operand;
+	private boolean isOperator;
+	private ExpressionNode left;
+	private ExpressionNode right;
+
+	public ExpressionNode(int opd) {
+	    this.operand = opd;
+	    this.isOperator = false;
+	}
+	
+	public ExpressionNode(char opt) {
+	    this.operator = opt;
+	    this.isOperator = true;
+	}
+
+	public ExpressionNode(char opt, ExpressionNode l, ExpressionNode r) {
+	    this.operator = opt;
+	    this.isOperator = true;
+	    this.left = l;
+	    this.right = r;
+	}
+    }
+
+    public int eval() {
+	if (root == null)
+	    return 0;
+	else
+	    return eval(root);
+    }
+
+    private int eval(ExpressionNode x) {
+
+	int l;
+	int r;
+	
+	if (!x.isOperator) // if operand/base case
+	    return x.operand;
+	else { // if operator
+	    l = eval(x.left);
+	    r = eval(x.right);
+	    switch (x.operator)
+		{
+		case '+' : return l + r;
+		case '-' : return l - r;
+		case '*' : return l * r;
+		case '/' : return l / r;
+		default : return 0;
+		}
+	}
+    }
+    
+    public String postfix() {
+	if (root == null)
+	    return "";
+	else
+	    return postfix(root);
+    }
+
+    private String postfix(ExpressionNode x) {
+
+	String l;
+	String r;
+	
+	if (!x.isOperator)
+	    return "" + x.operand;
+	else {
+	    l = postfix(x.left);
+	    r = postfix(x.right);
+	    return l + " " + r + " " + x.operator;
+	}
+    }
+
+    public String prefix() {
+	if (root == null)
+	    return "";
+	else
+	    return prefix(root);
+    }
+
+    private String prefix(ExpressionNode x) {
+
+     	String l;
+	String r;
+	
+	if (!x.isOperator)
+	    return "" + x.operand;
+	else {
+	    l = prefix(x.left);
+	    r = prefix(x.right);
+	    return x.operator + " " + l + " " + r;
+	}
+    }
+    
+    public String infix() {
+	if (root == null)
+	    return "";
+	else
+	    return infix(root);	
+    }
+
+    private String infix(ExpressionNode x) {
+
+	String l;
+	String r;
+	
+	if (!x.isOperator)
+	    return "" + x.operand;
+	else {
+	    l = infix(x.left);
+	    r = infix(x.right);
+	    return "(" + l + " " + x.operator + " " + r + ")";
+	}	
+    }
+    
+}

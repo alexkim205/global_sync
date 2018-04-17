@@ -1,0 +1,38 @@
+import java.util.LinkedList;
+
+public class ExpressionTree {
+
+    private String postfix;
+    private LinkedList<ExpressionNode> node;
+
+    private static class ExpressionNode() {
+	private char operator;
+	private int operand;
+	private boolean isOperator;
+	private ExpressionNode left;
+	private ExpressionNode right;
+
+	private ExpressionNode(int opd) {
+	    this.operand = opd;
+	    this.isOperator = false;
+	}
+	
+	private ExpressionNode(char opt) {
+	    this.operator = opt;
+	    this.isOperator = true;
+	}
+
+	private ExpressionNode(char opt, ExpressionNode l, ExpressionNode r) {
+	    this.operator = opt;
+	    this.isOperator = true;
+	    this.left = l;
+	    this.right = r;
+	}
+    }
+    
+    public ExpressionTree (String s) {
+	this.postfix = s;
+    }
+
+    
+}

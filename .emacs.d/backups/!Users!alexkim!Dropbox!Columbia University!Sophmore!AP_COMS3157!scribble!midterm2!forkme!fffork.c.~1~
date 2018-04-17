@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+
+
+void print_char(char c)  { fwrite(&c, 1, 1, stderr); }
+static int i = 3;
+void fffork(char **a)
+{
+  if (*a) {
+    pid_t pid = fork();
+    if (pid == 0) {
+      // child process
+      i--;
+      fffork(a + 1);
+      print_char(a[0][i]);
+    } else {
+      // parent process
+      waitpid(pid, NULL, 0); // no status & no options
+      print_char(’0’);
+      print_char(’\n’);
+    }
+  }
+}
+
+int main() {
+  char *a[4] = { "123",
+		 "456",
+		 "789",
+		 NULL };
+  fffork(a);
+  return 0;
+}
+
