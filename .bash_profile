@@ -17,7 +17,7 @@ echo "Bash settings up to date!"
 
 ## git add changes when terminal exits
 gitadd() {
-    git add .bash_profile .bashrc .emacs .tmux.conf .emacs.d/ .ssh/ .tmux/
+    git add .bash_profile .bashrc .emacs .tmux.conf .emacs.d/ .ssh/ .tmux/ .iterm2/
     git commit -m "terminal startup sync"
     git push    
 }
