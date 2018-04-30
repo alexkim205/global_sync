@@ -1,0 +1,55 @@
+import datetime
+import calendar
+
+def addtrip():
+  name = raw_input("Name: ")
+  place = raw_input("Place: ")
+  # year = int(input('Year'))
+  month = int(input('Month: '))
+  day = int(input('Day: '))
+  datef = datetime.date(2018, month, day)
+  transport = int(input("(1)bus/(2)van/(3)metro: "))
+  if transport == 1:
+    travel = "the Columbia School bus"
+    spots = "10 - 14"
+  elif transport == 2:
+    travel = "a van"
+    spots = "11"
+  else:
+    travel = "the Metro-North"
+    spots = "9"
+  diff = int(input("easy/intermediate/hard: "))
+
+    
+  p = "\n"
+  p += name + "'s " + place + " Hike" + datef.strftime("%B %d, %Y\n\n")
+  p += "Join us for a hike to " + place + "!\n\n"
+  p += "Date: " + calendar.day_name[datef.weekday()] + datef.strftime(", %B %dth") + "\n"
+  p += "Hike leader: " + name + "\n"
+  p += "Destination: " + place + "\n"
+  p += "Travel: We will be taking " + travel + "\n"
+  p += "Cost: $25 (undergraduate students) OR $35 (graduate students) for unlimited hikes this semester\n"
+  p += "# of spots: " + spots + "\n"
+  p += "Bring: hiking boots, lunch, and 2 liters of water\n"
+  p += "Meet time: 8:00 AM at 116th and Amsterdam gates (please be there by 8:00 AM , we will leave very soon after 8:00)\n"
+  p += "Level of Difficulty: " + diff + "\n"
+  p += "For a full description of levels of difficulties check out this post: <a href=\"https://cuhikingclub.wordpress.com/2018/04/19/levels-of-difficulty/\">Levels of Difficulty</a>"
+  
+  gf = "\n------------FOR GOOGLE FORM------------\n\n"
+  gf += place + " Hike " + datef.strftime("%B %d, %Y\n")
+  gf += "Trek along with the hiking club to " + place + "!  We will be taking " + travel + " to get to this fun hiking destination and hope you will join us! Please only submit this form if you're able to complete the requirements below at the time of submission. Incomplete submissions will not save your spot on the hike.\n"
+
+  return p + gf
+
+if __name__ == '__main__':
+  bool = True
+  printresult = ""
+
+  while (bool):
+    if raw_input("Add a trip? (y/n) ") is not "y":
+      bool = False
+    else:
+      printresult += addtrip()
+      print "\n-------------------------------------------------\n"
+  
+  print printresult
