@@ -1,0 +1,8 @@
+#include <iostream>
+using namespace std;
+
+int get_num_elements(int *a) {return sizeof(a)/sizeof(int); }
+
+int main() {
+  int a[10]; cout << get_num_elements(a) << endl; return 0; 
+}

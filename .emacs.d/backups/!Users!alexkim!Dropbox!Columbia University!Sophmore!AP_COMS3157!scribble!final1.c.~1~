@@ -1,0 +1,8 @@
+struct Pt {
+  int x;
+  int y;
+
+  Pt() {x = 1; y=2;}
+  void swap() {int t=x; x=y; y=t;}
+  void print() const {cout << x << y << endl;}
+}
