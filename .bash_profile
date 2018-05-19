@@ -1,9 +1,6 @@
 
 # Setting PATH for Python 3.6
-PYTHONHOME=/usr/local/Cellar/python3/3.6.5/Frameworks/Python.framework/Versions/3.6
-PYTHONPATH=$PYTHONHOME/bin
-export PYTHONHOME
-export PYTHONPATH
+
 
 # iterm2 shell integration
 source ~/.iterm2/.iterm2_shell_integration.bash
